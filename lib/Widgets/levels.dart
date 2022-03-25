@@ -3,28 +3,31 @@ import 'package:multy_game/Widgets/game.dart';
 
 class LevelsWidget extends StatefulWidget {
   final int level;
-  final int points;
-  const LevelsWidget({Key? key, required this.level, required this.points})
-      : super(key: key);
+  final List levelsPoints;
+  const LevelsWidget({
+    Key? key,
+    required this.level,
+    required this.levelsPoints,
+  }) : super(key: key);
 
   @override
   State<LevelsWidget> createState() => _LevelsWidgetState();
 }
 
 class _LevelsWidgetState extends State<LevelsWidget> {
-  List levelsPoints = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  //List levelsPoints = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   @override
   void initState() {
-    if (widget.level > 0) {
+    /*if (widget.level > 0) {
       if (widget.points == 2) {
-        levelsPoints[widget.level - 1] = 1;
+        widget.levelsPoints[widget.level - 1] = 1;
       } else if (widget.points == 3) {
-        levelsPoints[widget.level - 1] = 2;
+        widget.levelsPoints[widget.level - 1] = 2;
       } else if (widget.points == 4) {
-        levelsPoints[widget.level - 1] = 3;
+        widget.levelsPoints[widget.level - 1] = 3;
       }
-    }
+    }*/
 
     super.initState();
   }
@@ -57,22 +60,23 @@ class _LevelsWidgetState extends State<LevelsWidget> {
                     mainAxisSpacing: 13,
                     shrinkWrap: true,
                     children: [
-                      LevelBtn(level: 1, levelsPoints: levelsPoints),
-                      LevelBtn(level: 2, levelsPoints: levelsPoints),
-                      LevelBtn(level: 3, levelsPoints: levelsPoints),
-                      LevelBtn(level: 4, levelsPoints: levelsPoints),
-                      LevelBtn(level: 5, levelsPoints: levelsPoints),
-                      LevelBtn(level: 6, levelsPoints: levelsPoints),
-                      LevelBtn(level: 7, levelsPoints: levelsPoints),
-                      LevelBtn(level: 8, levelsPoints: levelsPoints),
-                      LevelBtn(level: 9, levelsPoints: levelsPoints),
+                      LevelBtn(level: 1, levelsPoints: widget.levelsPoints),
+                      LevelBtn(level: 2, levelsPoints: widget.levelsPoints),
+                      LevelBtn(level: 3, levelsPoints: widget.levelsPoints),
+                      LevelBtn(level: 4, levelsPoints: widget.levelsPoints),
+                      LevelBtn(level: 5, levelsPoints: widget.levelsPoints),
+                      LevelBtn(level: 6, levelsPoints: widget.levelsPoints),
+                      LevelBtn(level: 7, levelsPoints: widget.levelsPoints),
+                      LevelBtn(level: 8, levelsPoints: widget.levelsPoints),
+                      LevelBtn(level: 9, levelsPoints: widget.levelsPoints),
                     ],
                   ),
                   SizedBox(height: 13),
                   Container(
                     height: 100,
                     width: double.infinity,
-                    child: LevelBtn(level: 10, levelsPoints: levelsPoints),
+                    child:
+                        LevelBtn(level: 10, levelsPoints: widget.levelsPoints),
                   ),
                 ],
               ),
@@ -103,8 +107,8 @@ class LevelBtn extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => MultyGame(
-                        level: level, points: levelsPoints[level - 1])));
+                    builder: (context) =>
+                        MultyGame(level: level, levelsPoints: levelsPoints)));
           },
           child: Container(
             decoration: BoxDecoration(

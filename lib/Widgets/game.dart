@@ -3,12 +3,16 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:multy_game/Widgets/levels.dart';
+import 'package:multy_game/Widgets/main.dart';
 
 class MultyGame extends StatefulWidget {
   final int level;
-  final int points;
-  const MultyGame({Key? key, required this.level, required this.points})
-      : super(key: key);
+  final List levelsPoints;
+  const MultyGame({
+    Key? key,
+    required this.level,
+    required this.levelsPoints,
+  }) : super(key: key);
 
   @override
   State<MultyGame> createState() => _MultyGameState();
@@ -29,7 +33,8 @@ class _MultyGameState extends State<MultyGame> {
   int num1 = 0;
   int num2 = 0;
   int res = 0;
-  int _ex = 10;
+  int _ex = 3;
+  int max = 0;
   int points = 0;
   bool popupEndLevel = false;
   List list = [
@@ -99,8 +104,7 @@ class _MultyGameState extends State<MultyGame> {
   }
 
   void multypleRes(index) {
-    //print(_ex);
-    if (_ex > 1) {
+    if (_ex > 0) {
       if (canTap) {
         setState(() {
           if (index < 10) {
@@ -140,6 +144,21 @@ class _MultyGameState extends State<MultyGame> {
       Future.delayed(const Duration(milliseconds: 0), () {
         setState(() {
           popupEndLevel = true;
+          print(points);
+          print(widget.levelsPoints[widget.level - 1]);
+
+          if (points == max - 2 && widget.levelsPoints[widget.level - 1] <= 1) {
+            widget.levelsPoints[widget.level - 1] = 1;
+          } else if (points == max - 1 &&
+              widget.levelsPoints[widget.level - 1] <= 2) {
+            widget.levelsPoints[widget.level - 1] = 2;
+          } else if (points == max &&
+              widget.levelsPoints[widget.level - 1] <= 3) {
+            widget.levelsPoints[widget.level - 1] = 3;
+          } else {
+            widget.levelsPoints[widget.level - 1] =
+                widget.levelsPoints[widget.level - 1];
+          }
         });
       });
     }
@@ -149,6 +168,7 @@ class _MultyGameState extends State<MultyGame> {
   @override
   void initState() {
     levelNum = widget.level;
+    max = _ex;
     multypleInit();
     super.initState();
   }
@@ -352,21 +372,21 @@ class _MultyGameState extends State<MultyGame> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
-                                points > 1
+                                widget.levelsPoints[widget.level - 1] > 0
                                     ? Icons.star
                                     : Icons.star_border_outlined,
                                 color: Color(0xffF9DE09),
                                 size: 30,
                               ),
                               Icon(
-                                points > 2
+                                widget.levelsPoints[widget.level - 1] > 1
                                     ? Icons.star
                                     : Icons.star_border_outlined,
                                 color: Color(0xffF9DE09),
                                 size: 30,
                               ),
                               Icon(
-                                points > 3
+                                widget.levelsPoints[widget.level - 1] > 2
                                     ? Icons.star
                                     : Icons.star_border_outlined,
                                 color: Color(0xffF9DE09),
@@ -385,7 +405,8 @@ class _MultyGameState extends State<MultyGame> {
                                         MaterialPageRoute(
                                             builder: (context) => MultyGame(
                                                 level: levelNum,
-                                                points: points)));
+                                                levelsPoints:
+                                                    widget.levelsPoints)));
                                   },
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
@@ -415,7 +436,8 @@ class _MultyGameState extends State<MultyGame> {
                                         MaterialPageRoute(
                                             builder: (context) => LevelsWidget(
                                                 level: levelNum,
-                                                points: points)));
+                                                levelsPoints:
+                                                    widget.levelsPoints)));
                                   },
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
