@@ -49,9 +49,16 @@ class _LevelsWidgetState extends State<LevelsWidget> {
   void _saveList() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      //levelsPoints[widget.level] = ;
       prefs.setStringList(
           'list', levelsPoints.map((e) => e.toString()).toList());
+    });
+  }
+
+  void _clearList() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.clear();
+      _loadList();
     });
   }
 
@@ -100,6 +107,9 @@ class _LevelsWidgetState extends State<LevelsWidget> {
                     width: double.infinity,
                     child: LevelBtn(level: 10, levelsPoints: levelsPoints),
                   ),
+                  SizedBox(height: 13),
+                  TextButton(
+                      onPressed: _clearList, child: Text('Удалить результаты'))
                 ],
               ),
             ),

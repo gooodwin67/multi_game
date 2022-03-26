@@ -33,8 +33,9 @@ class _MultyGameState extends State<MultyGame> {
   bool canTap = true;
   int num1 = 0;
   int num2 = 0;
+  int pointsOnLevel = 0;
   int res = 0;
-  int _ex = 3;
+  int _ex = 10;
   int max = 0;
   int points = 0;
   bool popupEndLevel = false;
@@ -145,20 +146,31 @@ class _MultyGameState extends State<MultyGame> {
       Future.delayed(const Duration(milliseconds: 0), () {
         setState(() {
           popupEndLevel = true;
-          print(points);
-          print(widget.levelsPoints[widget.level - 1]);
 
           if (points == max - 2 && widget.levelsPoints[widget.level - 1] <= 1) {
             widget.levelsPoints[widget.level - 1] = 1;
           } else if (points == max - 1 &&
               widget.levelsPoints[widget.level - 1] <= 2) {
             widget.levelsPoints[widget.level - 1] = 2;
+            pointsOnLevel = 2;
           } else if (points == max &&
               widget.levelsPoints[widget.level - 1] <= 3) {
             widget.levelsPoints[widget.level - 1] = 3;
+            pointsOnLevel = 3;
           } else {
             widget.levelsPoints[widget.level - 1] =
                 widget.levelsPoints[widget.level - 1];
+            pointsOnLevel = 0;
+          }
+
+          if (points == max - 2) {
+            pointsOnLevel = 1;
+          } else if (points == max - 1) {
+            pointsOnLevel = 2;
+          } else if (points == max) {
+            pointsOnLevel = 3;
+          } else {
+            pointsOnLevel = 0;
           }
           _saveList();
         });
@@ -383,21 +395,21 @@ class _MultyGameState extends State<MultyGame> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
-                                widget.levelsPoints[widget.level - 1] > 0
+                                pointsOnLevel > 0
                                     ? Icons.star
                                     : Icons.star_border_outlined,
                                 color: Color(0xffF9DE09),
                                 size: 30,
                               ),
                               Icon(
-                                widget.levelsPoints[widget.level - 1] > 1
+                                pointsOnLevel > 1
                                     ? Icons.star
                                     : Icons.star_border_outlined,
                                 color: Color(0xffF9DE09),
                                 size: 30,
                               ),
                               Icon(
-                                widget.levelsPoints[widget.level - 1] > 2
+                                pointsOnLevel > 2
                                     ? Icons.star
                                     : Icons.star_border_outlined,
                                 color: Color(0xffF9DE09),
