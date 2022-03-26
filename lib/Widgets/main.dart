@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multy_game/Widgets/levels.dart';
 
-List levelsPoints = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
 class MainWidget extends StatelessWidget {
   const MainWidget({Key? key}) : super(key: key);
 
@@ -38,8 +36,7 @@ class MainWidget extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => LevelsWidget(
-                              level: 0, levelsPoints: levelsPoints)));
+                          builder: (context) => LevelsWidget(level: 0)));
                 },
                 style: ButtonStyle(
                   backgroundColor:

@@ -4,11 +4,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:multy_game/Widgets/levels.dart';
 import 'package:multy_game/Widgets/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MultyGame extends StatefulWidget {
   final int level;
-  final List levelsPoints;
-  const MultyGame({
+  List levelsPoints;
+  MultyGame({
     Key? key,
     required this.level,
     required this.levelsPoints,
@@ -33,7 +34,7 @@ class _MultyGameState extends State<MultyGame> {
   int num1 = 0;
   int num2 = 0;
   int res = 0;
-  int _ex = 10;
+  int _ex = 3;
   int max = 0;
   int points = 0;
   bool popupEndLevel = false;
@@ -159,6 +160,7 @@ class _MultyGameState extends State<MultyGame> {
             widget.levelsPoints[widget.level - 1] =
                 widget.levelsPoints[widget.level - 1];
           }
+          _saveList();
         });
       });
     }
@@ -171,6 +173,15 @@ class _MultyGameState extends State<MultyGame> {
     max = _ex;
     multypleInit();
     super.initState();
+  }
+
+  void _saveList() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      //levelsPoints[widget.level] = ;
+      prefs.setStringList(
+          'list', widget.levelsPoints.map((e) => e.toString()).toList());
+    });
   }
 
   @override
@@ -435,9 +446,8 @@ class _MultyGameState extends State<MultyGame> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => LevelsWidget(
-                                                level: levelNum,
-                                                levelsPoints:
-                                                    widget.levelsPoints)));
+                                                  level: levelNum,
+                                                )));
                                   },
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(

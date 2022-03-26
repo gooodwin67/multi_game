@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:multy_game/Widgets/game.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LevelsWidget extends StatefulWidget {
   final int level;
-  final List levelsPoints;
   const LevelsWidget({
     Key? key,
     required this.level,
-    required this.levelsPoints,
   }) : super(key: key);
 
   @override
@@ -16,6 +15,9 @@ class LevelsWidget extends StatefulWidget {
 
 class _LevelsWidgetState extends State<LevelsWidget> {
   //List levelsPoints = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  List<int> levelsPoints = [];
+  List<int> levelsPointsInt = [];
+  List<String> levelsPointsStr = [];
 
   @override
   void initState() {
@@ -28,8 +30,29 @@ class _LevelsWidgetState extends State<LevelsWidget> {
         widget.levelsPoints[widget.level - 1] = 3;
       }
     }*/
-
     super.initState();
+    _loadList();
+    _saveList();
+  }
+
+  void _loadList() async {
+    final prefs = await SharedPreferences.getInstance();
+    //prefs.clear();
+    levelsPointsStr = prefs.getStringList('list') ??
+        ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
+
+    setState(() {
+      levelsPoints = levelsPointsStr.map((e) => int.parse(e)).toList();
+    });
+  }
+
+  void _saveList() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      //levelsPoints[widget.level] = ;
+      prefs.setStringList(
+          'list', levelsPoints.map((e) => e.toString()).toList());
+    });
   }
 
   @override
@@ -60,23 +83,22 @@ class _LevelsWidgetState extends State<LevelsWidget> {
                     mainAxisSpacing: 13,
                     shrinkWrap: true,
                     children: [
-                      LevelBtn(level: 1, levelsPoints: widget.levelsPoints),
-                      LevelBtn(level: 2, levelsPoints: widget.levelsPoints),
-                      LevelBtn(level: 3, levelsPoints: widget.levelsPoints),
-                      LevelBtn(level: 4, levelsPoints: widget.levelsPoints),
-                      LevelBtn(level: 5, levelsPoints: widget.levelsPoints),
-                      LevelBtn(level: 6, levelsPoints: widget.levelsPoints),
-                      LevelBtn(level: 7, levelsPoints: widget.levelsPoints),
-                      LevelBtn(level: 8, levelsPoints: widget.levelsPoints),
-                      LevelBtn(level: 9, levelsPoints: widget.levelsPoints),
+                      LevelBtn(level: 1, levelsPoints: levelsPoints),
+                      LevelBtn(level: 2, levelsPoints: levelsPoints),
+                      LevelBtn(level: 3, levelsPoints: levelsPoints),
+                      LevelBtn(level: 4, levelsPoints: levelsPoints),
+                      LevelBtn(level: 5, levelsPoints: levelsPoints),
+                      LevelBtn(level: 6, levelsPoints: levelsPoints),
+                      LevelBtn(level: 7, levelsPoints: levelsPoints),
+                      LevelBtn(level: 8, levelsPoints: levelsPoints),
+                      LevelBtn(level: 9, levelsPoints: levelsPoints),
                     ],
                   ),
                   SizedBox(height: 13),
                   Container(
                     height: 100,
                     width: double.infinity,
-                    child:
-                        LevelBtn(level: 10, levelsPoints: widget.levelsPoints),
+                    child: LevelBtn(level: 10, levelsPoints: levelsPoints),
                   ),
                 ],
               ),
