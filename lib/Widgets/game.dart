@@ -33,7 +33,7 @@ class _MultyGameState extends State<MultyGame> {
   int num1 = 0;
   int num2 = 0;
   int res = 0;
-  int _ex = 3;
+  int _ex = 10;
   int max = 0;
   int points = 0;
   bool popupEndLevel = false;
