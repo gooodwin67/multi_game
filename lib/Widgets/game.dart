@@ -385,7 +385,7 @@ class _MultyGameState extends State<MultyGame> {
                                 : 'ИТОГОВЫЙ ЭКЗАМЕН',
                             style: TextStyle(
                               fontFamily: 'Georgia',
-                              fontSize: levelNum < 10 ? 30 : 25,
+                              fontSize: levelNum < 10 ? 30 : 20,
                               color: Color.fromARGB(255, 100, 45, 45),
                               fontWeight: FontWeight.bold,
                             ),
