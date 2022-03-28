@@ -109,6 +109,7 @@ class _MultyGameState extends State<MultyGame> {
     if (_ex > 0) {
       if (canTap) {
         setState(() {
+          _ex--;
           if (index < 10) {
             _timer.cancel();
             list[index].shadowOpacity = 0.0;
@@ -176,7 +177,6 @@ class _MultyGameState extends State<MultyGame> {
         });
       });
     }
-    _ex--;
   }
 
   @override
